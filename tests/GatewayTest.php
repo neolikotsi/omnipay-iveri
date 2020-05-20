@@ -17,9 +17,9 @@ class GatewayTest extends GatewayTestCase
 
         $this->options = [
             'card' => [
-                'firstName' => 'Xu',
-                'lastName' => 'Ding',
-                'email' => 'xuding@spacebib.com',
+                'firstName' => 'Neo',
+                'lastName' => 'Likotsi',
+                'email' => 'neo@example.com',
             ],
             'amount' => 1999.00,
             'currency' => 'ZAR',
@@ -37,6 +37,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertInstanceOf('\Omnipay\IVeri\Message\PurchaseRequest', $request);
         $this->assertSame('12.00', $request->getAmount());
+        $this->assertSame(1200, $request->getAmountInteger());
     }
 
     public function testCompletePurchase()
@@ -45,5 +46,6 @@ class GatewayTest extends GatewayTestCase
 
         $this->assertInstanceOf('\Omnipay\IVeri\Message\CompletePurchaseRequest', $request);
         $this->assertSame('12.00', $request->getAmount());
+        $this->assertSame(1200, $request->getAmountInteger());
     }
 }
