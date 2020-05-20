@@ -77,7 +77,7 @@ class PurchaseRequest extends AbstractRequest
     protected function generateSignature($data)
     {
         $filter = ['passphrase',
-            // 'timestamp',
+            'timestamp',
             'Lite_Merchant_ApplicationID',
             'Lite_Order_Amount',
             'Ecom_BillTo_Online_Email',
@@ -89,10 +89,9 @@ class PurchaseRequest extends AbstractRequest
 
         if (!array_key_exists('timestamp', $fields)) {
             $timestamp = time();
-            $fields = $this->insertAt(['timestamp' => $timestamp], $fields, 1);
+            // $fields = $this->insertAt(['timestamp' => $timestamp], $fields, 1);
+            $fields = insertAt(['timestamp' => $timestamp], $fields, 1);
         }
-
-        return $fields;
 
         return hash('sha256', implode('', $fields));
     }
