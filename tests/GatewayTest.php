@@ -31,6 +31,12 @@ class GatewayTest extends GatewayTestCase
 
     }
 
+    public function testEndpoint()
+    {
+        $this->assertEquals('https://backoffice.nedsecure.co.za/Lite/Transactions/New/EasyAuthorise.aspx',
+            $this->gateway->getEndpoint());
+    }
+
     public function testPurchase()
     {
         $request = $this->gateway->purchase(array('amount' => '12.00'));

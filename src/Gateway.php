@@ -18,14 +18,12 @@ class Gateway extends AbstractGateway
 
     public function getDefaultParameters()
     {
-        return array(
+        return [
             'merchantId' => '',
-            'Ecom_TransactionComplete' => 'FALSE',
-            'Ecom_Payment_Card_Protocols' => 'iVeri',
-            'Lite_Version' => '2.0',
             'passphrase' => '',
-            'transactionPrefix' => ''
-        );
+            'transactionPrefix' => '',
+            'endpoint' => 'https://backoffice.nedsecure.co.za/Lite/Transactions/New/EasyAuthorise.aspx',
+        ];
     }
 
     public function getMerchantId()
@@ -58,13 +56,23 @@ class Gateway extends AbstractGateway
         return $this->setParameter('passphrase', $value);
     }
 
-    public function purchase(array $parameters = array())
+    public function setEndpoint($value)
     {
-        return $this->createRequest('\Omnipay\Iveri\Message\PurchaseRequest', $parameters);
+        return $this->setParameter('endpoint', $value);
     }
 
-    public function completePurchase(array $parameters = array())
+    public function getEndpoint()
     {
-        return $this->createRequest('\Omnipay\Iveri\Message\CompletePurchaseRequest', $parameters);
+        return $this->getParameter('endpoint');
+    }
+
+    public function purchase(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\IVeri\Message\PurchaseRequest', $parameters);
+    }
+
+    public function completePurchase(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\IVeri\Message\CompletePurchaseRequest', $parameters);
     }
 }

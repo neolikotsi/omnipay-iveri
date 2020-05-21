@@ -9,8 +9,6 @@ use Omnipay\Common\Message\AbstractRequest;
  */
 class PurchaseRequest extends AbstractRequest
 {
-    protected $endpoint = 'https://backoffice.nedsecure.co.za/Lite/Transactions/New/EasyAuthorise.aspx';
-
     public function getMerchantId()
     {
         return $this->getParameter('merchant_id');
@@ -39,6 +37,16 @@ class PurchaseRequest extends AbstractRequest
     public function setPassphrase($value)
     {
         return $this->setParameter('passphrase', $value);
+    }
+
+    public function setEndpoint($value)
+    {
+        return $this->setParameter('endpoint', $value);
+    }
+
+    public function getEndpoint()
+    {
+        return $this->getParameter('endpoint');
     }
 
     public function getData()
@@ -114,6 +122,6 @@ class PurchaseRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        return $this->response = new PurchaseResponse($this, $data, $this->endpoint);
+        return $this->response = new PurchaseResponse($this, $data, $this->getEndpoint());
     }
 }
