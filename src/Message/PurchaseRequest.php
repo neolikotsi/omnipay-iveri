@@ -97,8 +97,7 @@ class PurchaseRequest extends AbstractRequest
 
         if (!array_key_exists('timestamp', $fields)) {
             $timestamp = time();
-            // $fields = $this->insertAt(['timestamp' => $timestamp], $fields, 1);
-            $fields = insertAt(['timestamp' => $timestamp], $fields, 1);
+            $fields = $this->insertAt(['timestamp' => $timestamp], $fields, 1);
         }
 
         return hash('sha256', implode('', $fields));
