@@ -9,6 +9,8 @@ use Omnipay\Common\Message\AbstractRequest;
  */
 class PurchaseRequest extends AbstractRequest
 {
+    protected $endpoint = 'https://portal.nedsecure.co.za/Lite/Authorise.aspx';
+
     public function getMerchantId()
     {
         return $this->getParameter('merchant_id');
@@ -39,16 +41,6 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('passphrase', $value);
     }
 
-    public function setEndpoint($value)
-    {
-        return $this->setParameter('endpoint', $value);
-    }
-
-    public function getEndpoint()
-    {
-        return $this->getParameter('endpoint');
-    }
-
     public function getData()
     {
         $this->validate('amount', 'description');
@@ -73,7 +65,7 @@ class PurchaseRequest extends AbstractRequest
         $data['Lite_Order_LineItems_Amount_1'] = $this->getAmountInteger();
         $data['Ecom_TransactionComplete'] = 'FALSE';
         $data['Ecom_Payment_Card_Protocols'] = 'iVeri';
-        $data['Lite_Version'] = '2.0';
+        $data['Lite_Version'] = 'neolikotsi-omnipay-iveri_line_2.0';
 
         $data['passphrase'] = $this->getParameter('passphrase');
         $data['Lite_Transaction_Token'] = $this->generateSignature($data);
@@ -84,7 +76,7 @@ class PurchaseRequest extends AbstractRequest
 
     protected function generateSignature($data)
     {
-        $filter = ['passphrase',
+        $filter = [ 'passphrase',
             'timestamp',
             'Lite_Merchant_ApplicationID',
             'Lite_Order_Amount',
@@ -121,6 +113,6 @@ class PurchaseRequest extends AbstractRequest
 
     public function sendData($data)
     {
-        return $this->response = new PurchaseResponse($this, $data, $this->getEndpoint());
+        return $this->response = new PurchaseResponse($this, $data, $this->endpoint);
     }
 }

@@ -12,7 +12,7 @@ class CompletePurchaseRequest extends PurchaseRequest
 {
     public function getData()
     {
-        if ($this->httpRequest->request->get('ECOM_PAYMENT_CARD_PROTOCOLS')) {
+        if ($this->httpRequest->request->get('LITE_TRANSACTIONINDEX')) {
             $data = $this->httpRequest->request->all();
 
             unset($data['Lite_Transaction_Token']);
@@ -20,7 +20,7 @@ class CompletePurchaseRequest extends PurchaseRequest
             return $data;
         }
 
-        throw new InvalidRequestException('Missing ECOM_PAYMENT_CARD_PROTOCOLS variables');
+        throw new InvalidRequestException('Missing LITE_TRANSACTIONINDEX variables');
     }
 
     public function sendData($data)

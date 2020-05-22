@@ -12,6 +12,7 @@ use Omnipay\Common\Message\RedirectResponseInterface;
 class PurchaseResponse extends AbstractResponse implements RedirectResponseInterface
 {
     protected $redirectUrl;
+    protected $statusCode;
 
     public function __construct(RequestInterface $request, $data, $redirectUrl)
     {

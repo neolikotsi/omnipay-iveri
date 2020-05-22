@@ -11,42 +11,49 @@ class PurchaseRequestTest extends TestCase
         $this->request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
     }
 
-    public function testSignature()
+    public function testTransactionToken()
     {
         $this->request->initialize(
             array(
+                'card' => [
+                    'firstName' => 'Neo',
+                    'lastName' => 'Likotsi',
+                    'email' => 'neo@example.com',
+                ],
                 'amount' => '12.00',
                 'description' => 'Test Product',
                 'transactionId' => 123,
-                'merchantId' => 'foo',
-                'merchantKey' => 'bar',
+                'merchantId' => '{c0f9f3e2-b75c-4864-b6c6-df1372fbedb0}',
                 'returnUrl' => 'https://www.example.com/return',
-                'cancelUrl' => 'https://www.example.com/cancel',
             )
         );
 
         $data = $this->request->getData();
-        $this->assertSame('812a071d77d0120073fd53ee7e45aa9b', $data['signature']);
+        $this->assertNotNull($data['Lite_Transaction_Token']);
     }
 
-    public function testSignatureWithPassphrase()
+    public function testBiilingUserDetails()
     {
         $this->request->initialize(
             array(
+                'card' => [
+                    'firstName' => 'Neo',
+                    'lastName' => 'Likotsi',
+                    'email' => 'neo@example.com',
+                ],
                 'amount' => '12.00',
                 'description' => 'Test Product',
                 'transactionId' => 123,
-                'merchantId' => '10004554',
-                'merchantKey' => '93zkeljp6j9ao',
+                'merchantId' => '{c0f9f3e2-b75c-4864-b6c6-df1372fbedb0}',
                 'returnUrl' => 'https://www.example.com/return',
-                'notifyUrl' => 'https://www.example.com/notify',
-                'cancelUrl' => 'https://www.example.com/cancel',
             )
         );
-        $this->request->setPassphrase('ihnKRspB5IZ5bpOzLKbVArpQfiGVuWh');
 
         $data = $this->request->getData();
-        $this->assertSame('c98b49c6d0914fa8bd13cc8974e2d29e', $data['signature']);
+
+        $this->assertArrayHasKey('Ecom_BillTo_Name_Postal_First', $data);
+        $this->assertArrayHasKey('Ecom_BillTo_Name_Postal_Last', $data);
+        $this->assertArrayHasKey('Ecom_BillTo_Online_Email', $data);
     }
 
     public function testPurchase()
@@ -62,8 +69,8 @@ class PurchaseRequestTest extends TestCase
         $this->assertNull($response->getMessage());
         $this->assertNull($response->getCode());
 
-        $this->assertSame('https://www.payfast.co.za/eng/process', $response->getRedirectUrl());
+        $this->assertSame('https://portal.nedsecure.co.za/Lite/Authorise.aspx', $response->getRedirectUrl());
         $this->assertSame('POST', $response->getRedirectMethod());
-        $this->assertArrayHasKey('signature', $response->getData());
+        $this->assertArrayHasKey('Lite_Transaction_Token', $response->getData());
     }
 }

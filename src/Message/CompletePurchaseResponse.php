@@ -15,7 +15,7 @@ class CompletePurchaseResponse extends AbstractResponse
     public function __construct(RequestInterface $request, $data)
     {
         parent::__construct($request, $data);
-        $this->statusCode = $data['LITE_PAYMENT_CARD_STATUSCode'];
+        $this->statusCode = $data['LITE_PAYMENT_CARD_STATUS'];
     }
 
     public function isSuccessful()
@@ -23,10 +23,16 @@ class CompletePurchaseResponse extends AbstractResponse
         return $this->statusCode == self::SUCCESS_CODE;
     }
 
-    public function getTransactionReference()
-    {
+    public function getTransactionId() {
         if ($this->isSuccessful() && isset($this->data['ECOM_CONSUMERORDERID'])) {
             return $this->data['ECOM_CONSUMERORDERID'];
+        }
+    }
+
+    public function getTransactionReference()
+    {
+        if ($this->isSuccessful() && isset($this->data['LITE_TRANSACTIONINDEX'])) {
+            return $this->data['LITE_TRANSACTIONINDEX'];
         }
     }
 

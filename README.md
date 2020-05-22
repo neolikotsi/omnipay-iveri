@@ -19,7 +19,6 @@ comopser require neolikotsi/omnipay-iveri
 The following methods are provided by this package:
 
 + purchase
-+ completePurchase
 
 For general usage instructions, please see the main [Omnipay](https://github.com/thephpleague/omnipay)
 repository.

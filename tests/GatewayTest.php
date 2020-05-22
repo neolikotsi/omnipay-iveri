@@ -23,18 +23,12 @@ class GatewayTest extends GatewayTestCase
             ],
             'amount' => 1999.00,
             'currency' => 'ZAR',
-            'description' => 'Marina Run 2016',
+            'description' => 'Test Product',
             'transactionId' => 12,
+            'merchantId' => '{c0f9f3e2-b75c-4864-b6c6-df1372fbedb0}',
             'returnUrl' => 'https://www.example.com/return',
-            'passphrase' => 'q74xrm6dkrDjpQGD',
         ];
 
-    }
-
-    public function testEndpoint()
-    {
-        $this->assertEquals('https://backoffice.nedsecure.co.za/Lite/Transactions/New/EasyAuthorise.aspx',
-            $this->gateway->getEndpoint());
     }
 
     public function testPurchase()

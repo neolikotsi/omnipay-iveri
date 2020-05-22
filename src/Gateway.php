@@ -22,7 +22,6 @@ class Gateway extends AbstractGateway
             'merchantId' => '',
             'passphrase' => '',
             'transactionPrefix' => '',
-            'endpoint' => 'https://backoffice.nedsecure.co.za/Lite/Transactions/New/EasyAuthorise.aspx',
         ];
     }
 
@@ -54,16 +53,6 @@ class Gateway extends AbstractGateway
     public function setPassphrase($value)
     {
         return $this->setParameter('passphrase', $value);
-    }
-
-    public function setEndpoint($value)
-    {
-        return $this->setParameter('endpoint', $value);
-    }
-
-    public function getEndpoint()
-    {
-        return $this->getParameter('endpoint');
     }
 
     public function purchase(array $parameters = [])
