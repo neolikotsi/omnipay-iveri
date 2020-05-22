@@ -59,7 +59,7 @@ class PurchaseRequest extends AbstractRequest
         }
 
         $data['Ecom_ConsumerOrderID'] = $this->getTransactionId();
-        $data['Lite_ConsumerOrderID_PreFix'] = $this->getTransactionPrefix();
+        $data['Lite_ConsumerOrderID_PreFix'] = $this->getTransactionPrefix() || 'AUTOGENERATE';
         $data['Lite_Order_Amount'] = $this->getAmountInteger();
         $data['Lite_Order_LineItems_Product_1'] = $this->getDescription();
         $data['Lite_Order_LineItems_Amount_1'] = $this->getAmountInteger();
