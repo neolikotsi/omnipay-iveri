@@ -13,7 +13,7 @@ class Gateway extends AbstractGateway
 {
     public function getName()
     {
-        return 'iVeri';
+        return 'IVeri';
     }
 
     public function getDefaultParameters()
