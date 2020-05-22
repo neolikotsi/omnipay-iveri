@@ -11,7 +11,7 @@ Omnipay is installed via [Composer](http://getcomposer.org/). To install, simply
 to your composer dependency by running:
 
 ```bash
-comopser require neolikotsi/omnipay-iveri
+composer require neolikotsi/omnipay-iveri
 ```
 
 ## Basic Usage
